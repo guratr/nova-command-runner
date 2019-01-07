@@ -1,9 +1,11 @@
 {
     "name": "guratr/command-runner",
-    "description": "A Laravel Nova tool.",
+    "description": "Laravel Nova tool for running Artisan commands.",
     "keywords": [
         "laravel",
-        "nova"
+        "nova",
+        "Artisan",
+        "commands"
     ],
     "license": "MIT",
     "require": {
