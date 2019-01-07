@@ -123,13 +123,13 @@
         },
         methods: {
             getHistory() {
-                Nova.request().get('/nova-vendor/command-runner/history/')
+                Nova.request().get('/nova-vendor/guratr/command-runner/history/')
                     .then(response => {
                         this.history = response.data;
                     });
             },
             getCommands() {
-                Nova.request().get('/nova-vendor/command-runner/commands/')
+                Nova.request().get('/nova-vendor/guratr/command-runner/commands/')
                     .then(response => {
                         this.groups = [];
                         for (let command in response.data) {
@@ -147,7 +147,7 @@
             },
             runCommand() {
                 this.running = true;
-                Nova.request().post('/nova-vendor/command-runner/commands/' + this.commandIndex + '/run')
+                Nova.request().post('/nova-vendor/guratr/command-runner/commands/' + this.commandIndex + '/run')
                     .then(response => {
                         this.$toasted.show(response.data.result, {type: response.data.status ? 'success' : 'error'});
                         this.running = false;

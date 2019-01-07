@@ -44,7 +44,7 @@ class ToolServiceProvider extends ServiceProvider
         }
 
         Route::middleware(['nova', Authorize::class])
-                ->prefix('nova-vendor/command-runner')
+                ->prefix('nova-vendor/guratr/command-runner')
                 ->group(__DIR__.'/../routes/api.php');
     }
 

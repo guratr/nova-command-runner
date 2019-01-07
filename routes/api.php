@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use Guratr\CommandRunner\Http\Controllers\HistoryController;
+use Guratr\CommandRunner\Http\Controllers\CommandsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,51 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/commands', function (Request $request) {
-    return config('nova-command-runner.commands');
-});
+Route::get('/commands', CommandsController::class . '@index');
+Route::post('/commands/{index}/run', CommandsController::class . '@run');
 
-Route::get('/history', function (Request $request) {
-    $history = \Cache::get('nova-command-runner-history', []);
-    array_walk($history, function (&$val) {
-        $val['time'] = \Carbon\Carbon::createFromTimestamp($val['time'])->diffForHumans();
-    });
+Route::get('/history', HistoryController::class . '@index');
 
-    return $history;
-});
-
-Route::post('/commands/{index}/run', function ($index, Request $request) {
-    $commands = config('nova-command-runner.commands');
-    $command = $commands[$index] ?? null;
-    if (!$command) {
-        return ['status' => false, 'result' => 'Command not found!'];
-    }
-
-    $start = microtime(true);
-    try {
-        $buffer = new \Symfony\Component\Console\Output\BufferedOutput();
-        \Artisan::call($command['run'], $command['options'] ?? [], $buffer);
-        $result = $buffer->fetch();
-        $status = true;
-    } catch (\Exception $exception) {
-        $result = $exception->getMessage();
-        $status = false;
-    }
-    $duration = microtime(true) - $start;
-
-    if ($historyLength = config('nova-command-runner.history')) {
-        $history = \Cache::get('nova-command-runner-history', []);
-        $history = array_slice($history, 0, $historyLength - 1);
-        array_unshift($history, [
-            'run'      => $command['run'],
-            'options'  => $command['options'] ?? [],
-            'status'   => $status ? 'success' : 'error',
-            'result'   => $result,
-            'time'     => now()->timestamp,
-            'duration' => round($duration, 4),
-        ]);
-        \Cache::forever('nova-command-runner-history', $history);
-    }
-
-    return ['status' => $status, 'result' => $result];
-});
