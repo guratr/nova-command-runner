@@ -1,5 +1,5 @@
 {
-    "name": "guratr/command-runner",
+    "name": "guratr/nova-command-runner",
     "description": "Laravel Nova tool for running Artisan commands.",
     "keywords": [
         "laravel",
