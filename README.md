@@ -1,4 +1,6 @@
 # Laravel Nova tool for running Artisan commands.
+[![Latest Version on Github](https://img.shields.io/packagist/v/guratr/nova-command-runner.svg?style=flat)](https://packagist.org/packages/guratr/nova-command-runner)
+[![Total Downloads](https://img.shields.io/packagist/dt/guratr/nova-command-runner.svg?style=flat)](https://packagist.org/packages/guratr/nova-command-runner)
 
 This [Nova](https://nova.laravel.com) tool lets you:
 - run artisan commands
