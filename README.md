@@ -3,7 +3,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/guratr/nova-command-runner.svg?style=flat)](https://packagist.org/packages/guratr/nova-command-runner)
 
 This [Nova](https://nova.laravel.com) tool lets you:
-- run artisan commands
+- run & queue artisan commands
 - specify options for commands
 - get command result
 - view commands history
@@ -43,8 +43,9 @@ php artisan vendor:publish --provider="Guratr\CommandRunner\ToolServiceProvider"
 Add your commands to config/nova-command-runner.php
 
 Available options:
-- run : command to run (E.g. route:cache)
-- options : arrary of options for command (e.g. ['--allow' => ['127.0.0.1']])  
+- run : command to run (e.g. `route:cache`)
+- options : array of options for command (e.g. `['--allow' => ['127.0.0.1']]`)  
+- queue : boolean (will use default settings when true) or array (e.g. `['connection' => 'database', 'queue' => 'default']`)
 - type : button class (primary, secondary, success, danger, warning, info, light, dark, link) 
 - group: Group name (optional)
 
